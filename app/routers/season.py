@@ -5,14 +5,20 @@ from app import schemas
 from app.database.database import get_db
 from app.repositories import season_repositories
 
-router = APIRouter(prefix='/seasons/season', tags=['Season'])
+router = APIRouter(
+    prefix='/seasons/season', 
+    tags=['Season'],
+    #Protege todas as Rotas
+    dependencies=[Depends(season_repositories.get_current_user)]
+)
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.SeasonOut)
 async def create_season(season: schemas.SeasonCreate, db: Session = Depends(get_db)):
     return season_repositories.create(db, season)
 
 @router.get('/', response_model=list[schemas.SeasonOut])
-async def get_all_seasons(db: Session = Depends(get_db)):
+#Protege a Rota
+async def get_all_seasons(db: Session = Depends(get_db), current_user: schemas.UserSchema = Depends(season_repositories.get_current_user)):
     return season_repositories.get_all(db)
 
 @router.get('/{id}', response_model=schemas.SeasonOut)

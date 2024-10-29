@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from app.database.database import engine
 from app import models
 from app.config import swagger as config
-from app.routers import auth,season,anime
+from app.routers import auth, season,anime, user
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -18,6 +18,7 @@ app = FastAPI(
 )
 
 app.include_router(auth.router)
+app.include_router(user.router)
 app.include_router(season.router)
 app.include_router(anime.router)
 
