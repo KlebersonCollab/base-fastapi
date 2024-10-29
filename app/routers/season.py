@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 from app import models, schemas
 from app.database.database import get_db
 
-router = APIRouter()
+router = APIRouter(prefix='/seasons/season', tags=['Season'])
 
-@router.post('/season/', status_code=status.HTTP_201_CREATED, response_model=schemas.SeasonOut)
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.SeasonOut)
 async def create_season(season: schemas.SeasonCreate, db: Session = Depends(get_db)):
     db_season = db.query(models.Season).filter(season.name == models.Season.name).first()
     if db_season:
@@ -18,18 +18,18 @@ async def create_season(season: schemas.SeasonCreate, db: Session = Depends(get_
     db.refresh(db_season)
     return db_season
 
-@router.get('/season/', response_model=list[schemas.SeasonOut])
+@router.get('/', response_model=list[schemas.SeasonOut])
 async def get_all_seasons(db: Session = Depends(get_db)):
     return db.query(models.Season).all()
 
-@router.get('/season/{id}', response_model=schemas.SeasonOut)
+@router.get('/{id}', response_model=schemas.SeasonOut)
 async def get_season_by_id(id: int, db: Session = Depends(get_db)):
     search = db.query(models.Season).filter(models.Season.id == id).first()
     if not search:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Season not found')
     return search
 
-@router.put('/season/{id}', response_model=schemas.SeasonOut)
+@router.put('/{id}', response_model=schemas.SeasonOut)
 async def update_season_by_id(id: int, Season: schemas.SeasonCreate, db: Session = Depends(get_db)):
     search = db.query(models.Season).filter(models.Season.id == id).first()
     if not search:
@@ -41,7 +41,7 @@ async def update_season_by_id(id: int, Season: schemas.SeasonCreate, db: Session
     db.refresh(search)
     return search
 
-@router.delete('/season/{id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_season_by_id(id: int, db: Session = Depends(get_db)):
     search = db.query(models.Season).filter(models.Season.id == id).first()
     if not search:

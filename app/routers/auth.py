@@ -5,7 +5,7 @@ from app import models, schemas
 from app.database.database import get_db
 from app.security.hashing import Hashing
 
-router = APIRouter()
+router = APIRouter(prefix='/auth', tags=['Authentication'])
 
 @router.post('/register/', status_code=status.HTTP_201_CREATED, response_model=schemas.UserSchema)
 async def create_user(User: schemas.UserSchema, db: Session = Depends(get_db)):
