@@ -70,6 +70,10 @@ Para gerar uma nova Secret rode o comando abaixo em um bash
 openssl rand -hex 32 no terminal
 ````
 
+## Rodando o Projeto
+
+Para iniciar o projeto utilize o comando ``uvicorn app.main:app --reload``
+
 ## Licença
 
 This project is licensed under the terms of the MIT license. See the [LICENSE](LICENSE) file for details.
