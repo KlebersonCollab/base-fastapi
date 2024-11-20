@@ -9,16 +9,21 @@ from app.config.jwt import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_KEY
 from app.schemas.auth_schema import TokenData
 from app.security.hashing import Hashing
 
+from app.config.logger_config import app_logger 
+
 def login(user:OAuth2PasswordRequestForm, db: Session):
     db_user = db.query(models.User).filter(models.User.email == user.username).first()
     if not db_user:
+        app_logger.error(f"Erro durante a execução: {status.HTTP_404_NOT_FOUND}, User not found")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
     if not Hashing.verify(user.password, db_user.password):
+        app_logger.error(f"Erro durante a execução: {status.HTTP_404_NOT_FOUND}, Invalid password")
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid password')
     
     access_token = create_access_token(
         data={'sub': db_user.email}
     )
+    app_logger.info(f"Execução bem sucedida!, {status.HTTP_200_OK} - Token gerado com sucesso",exc_info=True)
     return {'access_token': access_token, 'token_type': 'bearer'}
 
 def create_access_token(data: dict):
@@ -41,4 +46,5 @@ def verify_token(token: str):
             raise credentials_exception
         token_data = TokenData(email=email)
     except JWTError:
+        app_logger.error(f"Erro durante a execução: {credentials_exception}")
         raise credentials_exception
