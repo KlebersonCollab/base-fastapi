@@ -32,8 +32,8 @@ Clone o projeto:
 ```bash
 git clone https://github.com/KlebersonCollab/base-fastapi.git
 ```
-
-Como boa prática em python você deve executar a instalação das dependências em um ambiente virtual, crie um pelo comando ``python -m venv venv`` após isso ative o ambiente pelo comando ``venv\scripts\active``
+Este projeto requer Python 3.8 ou superior.
+Como boa prática em python você deve executar a instalação das dependências em um ambiente virtual, crie um pelo comando ``python -m venv venv`` após isso ative o ambiente pelo comando ``venv/scripts/active`` caso esteja usando linux utilize o comando ``source venv/bin/active``
 
 
 Após clonar o projeto você deve instalar as dependências do mesmo pelo comando:
