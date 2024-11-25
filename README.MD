@@ -57,6 +57,33 @@ pip install --upgrade setuptools
 pip uninstall setuptools #Em caso de falha
 pip install setuptools
 ```
+## Tabelas de Dados
+
+### Tabela de Usuários
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| id | int | Chave primária do usuário |
+| username | str | Nome de usuário |
+| email | str | E-mail do usuário |
+| password | str | Senha do usuário |
+
+### Tabela de Anime
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| id | int | Chave primária do anime |
+| title | str | Título do anime |
+| description | str | Descrição do anime |
+
+### Tabela de Season
+
+| Campo | Tipo | Descrição |
+| --- | --- | --- |
+| id | int | Chave primária do season |
+| anime_id | int | Id do anime relacionado |
+| season_id | int | Id do season relacionado |
+
 
 ## Segurança:
 
